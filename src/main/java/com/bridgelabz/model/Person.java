@@ -42,7 +42,4 @@ public class Person {
     public void setMobile(Long mobile) {
         this.mobile = mobile;
     }
-
-
-
 }
