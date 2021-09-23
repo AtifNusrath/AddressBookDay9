@@ -7,5 +7,6 @@ public interface IAddressBook {
     void addPerson();
     void editPerson();
     void deletePerson();
+    void openAddressBook();
 
 }

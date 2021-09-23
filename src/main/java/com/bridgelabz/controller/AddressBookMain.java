@@ -22,6 +22,9 @@ public class AddressBookMain {
                     util.createNewAddressBook();
                     break;
                 case 2:
+                    util.openAddressBook();
+                    break;
+                case 3:
                     System.out.println("-----------------------Quit Address Book-----------------------");
                     isExitAddressBook = true;
                     System.out.println("Thank you for your time");

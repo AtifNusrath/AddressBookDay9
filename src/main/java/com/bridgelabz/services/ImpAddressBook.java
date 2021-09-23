@@ -33,7 +33,6 @@ public class ImpAddressBook implements IAddressBook {
     public void createNewAddressBook() {
         System.out.println("-----------------------New Address Book-----------------------");
         System.out.println("Enter state name: ");
-
         statename = scanner.next();
 
         boolean isFoundState = false;
@@ -43,8 +42,8 @@ public class ImpAddressBook implements IAddressBook {
                 break;
             }
         }
-        if (!isFoundState) {
 
+        if (!isFoundState) {
             System.out.println("->State is added<-");
             boolean close = false;
 
@@ -94,7 +93,7 @@ public class ImpAddressBook implements IAddressBook {
 
         System.out.println("Enter mobile");
         Long mobile = scanner.nextLong();
-        // validating mobile is not taken by anyone
+
         boolean isMobileTaken = false;
         for (Person value : persons) {
             if (Objects.equals(value.getMobile(), mobile)) {
@@ -194,5 +193,67 @@ public class ImpAddressBook implements IAddressBook {
         } else
             System.out.println("No records to delete");
     }
+    @Override
+    public void openAddressBook() {
+        System.out.println("-----------------------Open Address Book-----------------------");
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < persons.size(); i++) {
+            map.put(persons.get(i).getAddressObj().getState(), persons.get(i).getAddressObj().getState());
+        }
+        System.out.println("states available " + map.keySet());
+        System.out.println("Enter state");
+        statename = scanner.next();
+        boolean isFoundState = false;
+        for (int i = 0; i < persons.size(); i++) {
+            if (persons.get(i).getAddressObj().getState().equals(statename)) {
+                isFoundState = true;
+                break;
+            }
+        }
+        if (isFoundState) {
+            System.out.println("->State is found<-");
+            boolean close2 = false;
 
+            while (!close2) {
+                System.out.println("Select option: \n1.add\n2.edit\n3.delete\n4.print\n5.quit");
+                switch (scanner.nextInt()) {
+                    case 1:
+                        // add person
+                        addPerson();
+                        break;
+                    case 2:
+                        // edit person
+                        editPerson();
+                        break;
+                    case 3:
+                        // delete person
+                        deletePerson();
+                        break;
+
+                    case 4:
+                        // print
+                        if (counter > 0) {
+                            System.out.println("Printing all records...");
+
+                            ImpAddressBook.PrintPersonDetails(persons, statename);
+
+                        } else
+                            System.out.println("There is no record to print...");
+
+                        break;
+                    case 5:
+                        close2 = true;
+                        System.out.println("Closing...");
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                }
+            }
+
+        } else
+            System.out.println("Please create new state of that name\nelse try new state name");
+
+        System.out.println("-----------------------Open Address Book-----------------------");
+
+    }
 }
