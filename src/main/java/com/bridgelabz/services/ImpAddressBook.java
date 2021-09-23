@@ -4,12 +4,13 @@ import com.bridgelabz.model.Address;
 import com.bridgelabz.model.Person;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ImpAddressBook implements IAddressBook {
         Scanner scanner = new Scanner(System.in);
 
-    static ArrayList<Person> persons = new ArrayList<Person>();
+    static ArrayList<Person> persons = new ArrayList<>();
     int indexOfPerson;
     int counter = 0;
         String statename = "";
@@ -35,8 +36,8 @@ public class ImpAddressBook implements IAddressBook {
         statename = scanner.next();
 
         boolean isFoundState = false;
-        for (int i = 0; i < persons.size(); i++) {
-            if (persons.get(i).getAddressObj().getState().equals(statename)) {
+        for (Person person : persons) {
+            if (person.getAddressObj().getState().equals(statename)) {
                 isFoundState = true;
                 break;
             }
@@ -47,7 +48,7 @@ public class ImpAddressBook implements IAddressBook {
             boolean close = false;
 
             while (!close) {
-                System.out.println("Select option: \n1.add\n2.Edit\n3.print\n4.close");
+                System.out.println("Select option: \n1.add\n2.Edit\n3.print\n4.Delete\n5.close");
                 int ch = scanner.nextInt();
                 switch (ch) {
                     case 1:
@@ -67,6 +68,9 @@ public class ImpAddressBook implements IAddressBook {
                             System.out.println("There is no record to print...");
                         break;
                     case 4:
+                        deletePerson();
+                        break;
+                    case 5:
                         close = true;
                         System.out.println("Closing...");
                         break;
@@ -91,8 +95,8 @@ public class ImpAddressBook implements IAddressBook {
         Long mobile = scanner.nextLong();
         // validating mobile is not taken by anyone
         boolean isMobileTaken = false;
-        for (int i = 0; i < persons.size(); i++) {
-            if (persons.get(i).getMobile() == mobile) {
+        for (Person value : persons) {
+            if (Objects.equals(value.getMobile(), mobile)) {
                 isMobileTaken = true;
                 break;
             }
@@ -162,6 +166,32 @@ public class ImpAddressBook implements IAddressBook {
         } else
             System.out.println("There is no record to edit");
 
+    }
+
+    @Override
+    public void deletePerson() {
+        if (counter > 0) {
+            System.out.println("Enter Persons FirstName you want to delete: ");
+            String searchName = scanner.next();
+            indexOfPerson = 0;
+            boolean isFoundPerson = false;
+
+            for  (int i = 0; i < persons.size(); i++) {
+                if (persons.get(i).getFirstname().equals(searchName)) {
+                    isFoundPerson = true;
+                    indexOfPerson = i;
+                    break;
+                }
+            }
+            if (isFoundPerson) {
+                persons.remove(indexOfPerson);
+                counter--;
+                System.out.println();
+                System.out.println("Delete completed");
+            } else
+                System.out.println("No person found with this number");
+        } else
+            System.out.println("No records to delete");
     }
 
 }
